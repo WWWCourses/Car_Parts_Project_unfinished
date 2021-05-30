@@ -1,0 +1,5 @@
+role,first_name,last_name,email,phone_number,password,created
+admin,dimitar,hristov,d@abv.bg,0884156033,1234,2021-05-24 21:30:37.397451
+user,vladimir,hristov,v@mail.bg,8888889999,2222,2021-05-24 21:38:40.624541
+admin,sonya,hristova,sss@abv.bg,122222,666,2021-05-24 21:42:55.790872
+user,ivan,simeonov,i@abv.bg,4569876321,6395,2021-05-24 21:44:59.797622
