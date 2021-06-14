@@ -1,9 +1,7 @@
-from matplotlib import pyplot as plt
 import csv
 from datetime import datetime
 from os import path
-from getters import get_users, get_parts, get_orders
-from classes import Users
+from getters import get_users, get_parts
 
 
 def make_order(user, selected_parts, total_price, profit):
@@ -167,44 +165,31 @@ def log_in():
             print("Wrong first name or password, please try again")
 
 
-def show_reg_users(users):
-    Users.print_info(users)
-
-
-def show_income():
-    orders = get_orders()
-    days = []
-    profit = []
-    data = dict()
-    for order in orders:
-        # days.append(datetime.datetime.strptime(order.date[:10], "%Y-%M-%d").date())
-        # profit.append(float(order.profit))
-        date = order.date
-        if date in data:
-            data[date] += float(order.profit)
-        else:
-            data[date] = float(order.profit)
-    plt.bar(data.keys(), data.values())
-    plt.title("Income for last 12 days")
-    plt.xlabel("Date")
-    plt.ylabel("Profit in $")
-    plt.show()
+def show_reg_users():
+    users = get_users()
+    print("Role: First name, Last name, Email, Date Created")
+    all_users = []
+    for user in users:
+        all_users.append(user)
+    for u in all_users:
+        print(25 * "=")
+        u.print_info()
+    print(25 * "-")
 
 
 def admin_menu(user):
-    print("Please select action:\n1.Update user info\n2.Show registered users\n3.Show profit for last 12 days\n-->")
+    print("Please select action:\n1.Update user info\n2.Show registered users\n-->")
     action = input()
     if action == "1":
         update_users(user)
     elif action == "2":
-        show_reg_users(user)
-    elif action == "3":
-        show_income()
+        show_reg_users()
     user_menu(user)
 
 
 def registration_form():
     while True:
+        today = datetime.now()
         user = dict()
         user["role"] = input("Please enter your role\n-->")
         user["first_name"] = input("Please enter your first name\n-->")
@@ -212,7 +197,7 @@ def registration_form():
         user["email"] = input("Please enter your email\n-->")
         user["phone_number"] = input("Please enter your phone number\n-->")
         user["password"] = input("Please enter your password\n-->")
-        user["created"] = datetime.now()
+        user["created"] = today.strftime("%d.%m.%Y-%H:%M:%S")
         existing_file = path.isfile("csv_data/users_data.csv")
         with open("csv_data/users_data.csv", "a", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=user.keys())
